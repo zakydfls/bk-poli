@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DinasController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\JadwalPeriksaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PasienController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\SignerController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\UserController;
 use App\Models\Bidang;
+use App\Models\JadwalPeriksa;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
     Route::post('/pasien/update', [PasienController::class, 'update'])->name('pasien.update');
     Route::post('/pasien/delete', [PasienController::class, 'destroy'])->name('pasien.delete');
+
+    // jadwal periksa
+    Route::get('/jadwal-periksa', [JadwalPeriksaController::class, 'index'])->name('jadwal-periksa');
+    Route::get('/jadwal-periksa/data', [JadwalPeriksaController::class, 'data'])->name('jadwal-periksa.data');
+    Route::post('/jadwal-periksa/create', [JadwalPeriksaController::class, 'store'])->name('jadwal-periksa.create');
+    Route::post('/jadwal-periksa/update', [JadwalPeriksaController::class, 'update'])->name('jadwal-periksa.update');
+    Route::post('/jadwal-periksa/delete', [JadwalPeriksaController::class, 'destroy'])->name('jadwal-periksa.delete');
 
     //DASHBOARD
     // Route::get('/grafik-bulanan', [DashboardController::class, 'grafikBulanan'])->name('grafikBulanan');
