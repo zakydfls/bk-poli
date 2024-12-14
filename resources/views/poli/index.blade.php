@@ -70,20 +70,26 @@
                     <h2 class="modal-title">Tambah Poli</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{route('poli.create')}}" method="POST">
+                <form action="{{ route('poli.create') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-10">
                             <label class="form-label">Nama Poli</label>
                             <input type="hidden" value="{{ url('/') }}" id="url">
                             <input type="hidden" value="{{ csrf_token() }}" id="token">
-                            <input type="text" class="form-control" name="nama_poli" placeholder="Name" id="nama_poli">
+                            <input type="text" class="form-control @error('nama_poli') is-invalid @enderror"
+                                name="nama_poli" placeholder="Name" id="nama_poli" required>
+                            @error('nama_poli')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Keterangan</label>
-                            <input type="text" class="form-control" name="keterangan" placeholder="Keterangan"
-                                id="keterangan" value="">
-                            <span id="notif"></span>
+                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
+                                name="keterangan" placeholder="Keterangan" id="keterangan" value="">
+                            @error('keterangan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -91,6 +97,7 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -108,12 +115,18 @@
                             <label class="form-label">Nama Poli</label>
                             <input type="hidden" id="id_u" name="id">
                             <input type="text" class="form-control" name="nama_poli" placeholder="Nama Poli"
-                                id="nama_poli_u">
+                                id="nama_poli_u" @error('nama_poli') is-invalid @enderror>
+                            @error('nama_poli')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Keterangan</label>
                             <input type="text" class="form-control" name="keterangan" placeholder="Keterangan"
-                                id="keterangan_u">
+                                id="keterangan_u" @error('keterangan') is-invalid @enderror>
+                            @error('keterangan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -235,4 +248,17 @@
     });
 
 </script>
+@if($errors->any())
+{{-- <script>
+    $(document).ready(function () {
+        @if(old('is_edit')) // Periksa apakah form ini untuk edit
+            $('#modalEdit').modal('show'); 
+        @else
+            $('#modalTambah').modal('show');
+        @endif
+    });
+</script> --}}
+@endif
+
+
 @endsection

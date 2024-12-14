@@ -62,10 +62,14 @@ class PoliController extends Controller
      */
     public function create(PoliRequest $request)
     {
-        $data = $request->validated();
-        Poli::create($data);
+        try {
+            $data = $request->validated();
+            Poli::create($data);
 
-        return redirect()->route('poli')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('poli')->with('success', 'Data berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect()->route('poli')->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -110,10 +114,14 @@ class PoliController extends Controller
      */
     public function update(PoliRequest $request)
     {
-        $id = $request->id;
-        $data = $request->validated();
-        Poli::find($id)->update($data);
-        return redirect()->route('poli')->with('success', 'Data berhasil diubah');
+        try {
+            $id = $request->id;
+            $data = $request->validated();
+            Poli::find($id)->update($data);
+            return redirect()->route('poli')->with('success', 'Data berhasil diubah');
+        } catch (\Exception $e) {
+            return redirect()->route('poli')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     /**

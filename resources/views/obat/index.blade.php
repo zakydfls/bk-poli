@@ -78,18 +78,19 @@
                             <label class="form-label">Nama Obat</label>
                             <input type="hidden" value="{{ url('/') }}" id="url">
                             <input type="hidden" value="{{ csrf_token() }}" id="token">
-                            <input type="text" class="form-control" name="nama_obat" placeholder="Nama" id="nama_obat">
+                            <input type="text" class="form-control" name="nama_obat" placeholder="Nama" id="nama_obat"
+                                required>
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Kemasan</label>
                             <input type="text" class="form-control" name="kemasan" placeholder="Kemasan" id="kemasan"
-                                value="">
+                                value="" required>
                             <span id="notif"></span>
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Harga</label>
                             <input type="number" class="form-control" name="harga" placeholder="Harga" id="harga"
-                                value="">
+                                value="" required>
                             <span id="notif"></span>
                         </div>
                     </div>

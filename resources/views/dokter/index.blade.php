@@ -79,22 +79,22 @@
                             <label class="form-label">Nama Dokter</label>
                             <input type="hidden" value="{{ url('/') }}" id="url">
                             <input type="hidden" value="{{ csrf_token() }}" id="token">
-                            <input type="text" class="form-control" name="nama" placeholder="Nama" id="nama">
+                            <input type="text" class="form-control" name="nama" placeholder="Nama" id="nama" required>
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Alamat</label>
                             <input type="text" class="form-control" name="alamat" placeholder="Alamat" id="alamat"
-                                value="">
+                                value="" required>
                             <span id="notif"></span>
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Harga</label>
+                            <label class="form-label">No HP</label>
                             <input type="number" class="form-control" name="no_hp" placeholder="No HP" id="no_hp"
-                                value="">
+                                value="" required>
                             <span id="notif"></span>
                         </div>
                         <div class="mb-10">
-                            <select class="form-control" name="id_poli" id="id_poli">
+                            <select class="form-control" name="id_poli" id="id_poli" required>
                                 <option value="" disabled selected>Pilih Poli</option>
                                 @foreach ($polis as $poli)
                                 <option class="text-dark" value="{{ $poli->id }}">{{ $poli->nama_poli }}</option>

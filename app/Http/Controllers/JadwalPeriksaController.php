@@ -131,14 +131,14 @@ class JadwalPeriksaController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $jadwalPeriksa = JadwalPeriksa::find($request->id);
-        $payload = [
-            'hari' => $request->hari,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_selesai' => $request->jam_selesai,
-            'status' => $request->status,
-        ];
+        $payload = $request->validate([
+            'hari' => 'required',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
+            'status' => 'required',
+        ]);
         $id_dokter = Auth::user()->id_dokter;
 
         if ($id_dokter) {
