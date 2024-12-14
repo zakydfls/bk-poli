@@ -34,7 +34,7 @@ class DokterController extends Controller
         try {
             $data = $request->validated();
             $dokter = Dokter::create($data);
-
+            // dd($dokter);
             User::create([
                 'name' => $dokter->nama,
                 'email' => $dokter->nama . '@gmail.com',
@@ -46,6 +46,7 @@ class DokterController extends Controller
 
             return redirect()->route('dokter')->with('success', 'Data berhasil ditambahkan');
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->route('dokter')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
@@ -155,8 +156,17 @@ class DokterController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = $request->id;
-        Dokter::destroy($id);
-        return response()->json(['success' => 'Data berhasil dihapus']);
+        try {
+
+            $id = $request->id;
+            if (!$id) {
+                return response()->json(['error' => 'ID tidak ditemukan'], 400);
+            }
+            Dokter::destroy($id);
+
+            return response()->json(['success' => 'Data berhasil dihapus']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
     }
 }

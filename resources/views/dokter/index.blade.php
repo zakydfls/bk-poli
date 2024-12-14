@@ -231,7 +231,7 @@
                 $.ajax({
                     type: "POST", 
                     headers:{'X-CSRF-TOKEN':token},
-                    url: "{{route('obat.delete')}}", 
+                    url: "{{route('dokter.delete')}}", 
                     dataType : "JSON",              
                     data:{id:id},
                         success: function(data){
@@ -245,7 +245,7 @@
                     error: function(data){
                         Swal.fire({
                             title: 'Error!',
-                            text: "Ups! Sepertinya ada yang salah :(",
+                            text: "Data gagal dihapus!",
                             icon: 'error'
                         })
                     }

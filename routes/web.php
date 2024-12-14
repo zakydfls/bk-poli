@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BidangController;
+use App\Http\Controllers\DaftarPoliController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DinasController;
@@ -38,39 +39,58 @@ Route::post('/register/pasien', [LoginController::class, 'registrasi_pasien'])->
 
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/poli/create', [PoliController::class, 'create'])->name('poli.create');
+        Route::post('/poli/update', [PoliController::class, 'update'])->name('poli.update');
+        Route::post('/poli/delete', [PoliController::class, 'destroy'])->name('poli.delete');
+        Route::get('/poli', [PoliController::class, 'index'])->name('poli');
+        Route::get('/poli/data', [PoliController::class, 'data'])->name('poli.data');
+
+        Route::post('/obat/create', [ObatController::class, 'create'])->name('obat.create');
+        Route::post('/obat/update', [ObatController::class, 'update'])->name('obat.update');
+        Route::post('/obat/delete', [ObatController::class, 'destroy'])->name('obat.delete');
+        Route::get('/obat', [ObatController::class, 'index'])->name('obat');
+        Route::get('/obat/data', [ObatController::class, 'data'])->name('obat.data');
+
+        Route::post('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
+        Route::post('/dokter/update', [DokterController::class, 'update'])->name('dokter.update');
+        Route::post('/dokter/delete', [DokterController::class, 'destroy'])->name('dokter.delete');
+        Route::get('/dokter', [DokterController::class, 'index'])->name('dokter');
+        Route::get('/dokter/data', [DokterController::class, 'data'])->name('dokter.data');
+
+        Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
+        Route::get('/pasien/data', [PasienController::class, 'data'])->name('pasien.data');
+    });
+
+    Route::middleware('role:dokter')->group(function () {
+        Route::post('/jadwal-periksa/create', [JadwalPeriksaController::class, 'store'])->name('jadwal-periksa.create');
+        Route::post('/jadwal-periksa/update', [JadwalPeriksaController::class, 'update'])->name('jadwal-periksa.update');
+        Route::post('/jadwal-periksa/delete', [JadwalPeriksaController::class, 'destroy'])->name('jadwal-periksa.delete');
+        Route::get('/jadwal-periksa', [JadwalPeriksaController::class, 'index'])->name('jadwal-periksa');
+        Route::get('/jadwal-periksa/data', [JadwalPeriksaController::class, 'data'])->name('jadwal-periksa.data');
+    });
+
+    Route::middleware('role:pasien')->group(function () {
+        Route::get('/daftar-poli', [DaftarPoliController::class, 'index'])->name('daftar-poli');
+        Route::get('/daftar-poli/jadwal', [DaftarPoliController::class, 'dataJadwalPeriksa'])->name('daftar-poli.jadwal');
+        Route::post('/daftar-poli/create', [DaftarPoliController::class, 'store'])->name('daftar-poli.create');
+    });
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-
-    Route::get('/poli', [PoliController::class, 'index'])->name('poli');
-    Route::get('/poli/data', [PoliController::class, 'data'])->name('poli.data');
-    Route::post('/poli/create', [PoliController::class, 'create'])->name('poli.create');
-    Route::post('/poli/update', [PoliController::class, 'update'])->name('poli.update');
-    Route::post('/poli/delete', [PoliController::class, 'destroy'])->name('poli.delete');
-
-    Route::get('/obat', [ObatController::class, 'index'])->name('obat');
-    Route::get('/obat/data', [ObatController::class, 'data'])->name('obat.data');
-    Route::post('/obat/create', [ObatController::class, 'create'])->name('obat.create');
-    Route::post('/obat/update', [ObatController::class, 'update'])->name('obat.update');
-    Route::post('/obat/delete', [ObatController::class, 'destroy'])->name('obat.delete');
-
-    Route::get('/dokter', [DokterController::class, 'index'])->name('dokter');
-    Route::get('/dokter/data', [DokterController::class, 'data'])->name('dokter.data');
-    Route::post('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
-    Route::post('/dokter/update', [DokterController::class, 'update'])->name('dokter.update');
-    Route::post('/dokter/delete', [DokterController::class, 'destroy'])->name('dokter.delete');
-
-    Route::get('/pasien', [PasienController::class, 'index'])->name('pasien');
-    Route::get('/pasien/data', [PasienController::class, 'data'])->name('pasien.data');
     Route::post('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
     Route::post('/pasien/update', [PasienController::class, 'update'])->name('pasien.update');
     Route::post('/pasien/delete', [PasienController::class, 'destroy'])->name('pasien.delete');
 
     // jadwal periksa
-    Route::get('/jadwal-periksa', [JadwalPeriksaController::class, 'index'])->name('jadwal-periksa');
-    Route::get('/jadwal-periksa/data', [JadwalPeriksaController::class, 'data'])->name('jadwal-periksa.data');
-    Route::post('/jadwal-periksa/create', [JadwalPeriksaController::class, 'store'])->name('jadwal-periksa.create');
-    Route::post('/jadwal-periksa/update', [JadwalPeriksaController::class, 'update'])->name('jadwal-periksa.update');
-    Route::post('/jadwal-periksa/delete', [JadwalPeriksaController::class, 'destroy'])->name('jadwal-periksa.delete');
+
+
+    // daftar poli
+
+
+    // Route::get('/daftar-poli/data', [DaftarPoliController::class, 'data'])->name('daftar-poli.data');
+
 
     //DASHBOARD
     // Route::get('/grafik-bulanan', [DashboardController::class, 'grafikBulanan'])->name('grafikBulanan');

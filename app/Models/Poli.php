@@ -10,4 +10,9 @@ class Poli extends Model
     use HasFactory;
 
     protected $fillable = ['nama_poli', 'keterangan'];
+
+    public function dokters()
+    {
+        return $this->hasMany(Dokter::class, 'id_poli');
+    }
 }
