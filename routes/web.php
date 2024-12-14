@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/daftar-poli/create', [DaftarPoliController::class, 'store'])->name('daftar-poli.create');
     });
 
+
+    Route::get('/daftar-poli/data', [DaftarPoliController::class, 'data'])->name('daftar-poli.data');
+    Route::get('/riwayat', [DaftarPoliController::class, 'history'])->name('daftar-poli.history');
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
