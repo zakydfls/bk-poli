@@ -66,19 +66,15 @@ class DaftarPoliController extends Controller
             } else if (Auth::user()->role == 'pasien') {
                 $daftarPolis->where('id_pasien', $id_pasien);
             }
-
-            // Ambil data dan urutkan berdasarkan created_at
             $data = $daftarPolis->orderBy('created_at', 'desc')->get();
-
-            // Gunakan DataTables untuk memproses data dan menambahkan kolom custom
             return DataTables::of($data)
-                ->addIndexColumn() // Menambahkan kolom index (nomor urut)
+                ->addIndexColumn()
                 ->addColumn('id_poli', function ($row) {
-                    // Ambil nama poli dari relasi
                     return $row->jadwalPeriksa->dokter->poli->nama_poli ?? 'Tidak Ada';
                 })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '
+                    if (Auth::user()->role === 'dokter' || Auth::user()->role === 'admin') {
+                        $actionBtn = '
                     <button class="btn btn-icon btn-success ubah" data-bs-toggle="modal" data-bs-target="#modalUbah" 
                         data-id="' . $row->id . '" 
                         data-nama="' . $row->pasien->nama . '"
@@ -98,7 +94,26 @@ class DaftarPoliController extends Controller
                         <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="white"/>
                         <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="white"/>
                     </svg></button>
+                <a href="' . route('daftar-poli.detail', $row->id) . '" class="btn btn-icon btn-info detail">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22Z" fill="white"/>
+                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="white"/>
+                    <rect x="8" y="12" width="8" height="2" rx="1" fill="white"/>
+                    <rect x="8" y="16" width="8" height="2" rx="1" fill="white"/>
+                </svg></a>
                     ';
+                    }
+                    if (Auth::user()->role === 'pasien') {
+                        $actionBtn = '
+                <a href="' . route('daftar-poli.detail', $row->id) . '" class="btn btn-icon btn-info detail">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22Z" fill="white"/>
+                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="white"/>
+                    <rect x="8" y="12" width="8" height="2" rx="1" fill="white"/>
+                    <rect x="8" y="16" width="8" height="2" rx="1" fill="white"/>
+                </svg></a>
+                    ';
+                    }
                     return $actionBtn;
                 })
                 ->rawColumns(['action']) // Menandai kolom action agar HTML bisa dirender

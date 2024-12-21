@@ -265,7 +265,8 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link {{set_active(['history'])}}" href="{{ route('daftar-poli.history')}}">
+                    <a class="menu-link {{set_active(['daftar-poli.history'])}}"
+                        href="{{ route('daftar-poli.history')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -439,11 +440,11 @@
                         <span class="menu-title">Dinas Dalam</span>
                     </a> --}}
                 </div>
-                <div class="menu-item">
+                {{-- <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
                         <span class="menu-section text-muted text-uppercase fs-8 ls-1">Rekap</span>
                     </div>
-                </div>
+                </div> --}}
                 <div class="menu-item">
                     {{-- <a class="menu-link {{set_active(['rekap','rekapByBulan'])}}" href="{{ route('rekap')}}">
                         <span class="menu-icon">

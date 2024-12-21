@@ -50,12 +50,12 @@
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column me-5">
                 <!--begin::Title-->
-                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">{{ $judul }}</h1>
+                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">{{ $judul ?? '' }}</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">{{ $judul }}</li>
+                    <li class="breadcrumb-item text-muted">{{ $judul ?? '' }}</li>
                     <!--end::Item-->
                     <!--begin::Item-->
                     <li class="breadcrumb-item">
@@ -68,7 +68,7 @@
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
-                    <li class="breadcrumb-item text-dark">{{ $sub_judul }}</li>
+                    <li class="breadcrumb-item text-dark">{{ $sub_judul ?? '' }}</li>
                     <!--end::Item-->
                 </ul>
                 <!--end::Breadcrumb-->

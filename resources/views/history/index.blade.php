@@ -154,6 +154,8 @@
     }   
 
     handleSearchDatatable();
+
+    
 </script>
 @endsection
 <style>

@@ -12,6 +12,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PeriksaController;
 use App\Http\Controllers\PoliController;
 use App\Http\Controllers\SignerController;
 use App\Http\Controllers\SuratController;
@@ -79,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/daftar-poli/data', [DaftarPoliController::class, 'data'])->name('daftar-poli.data');
+    Route::get('/daftar-poli/detail/{id}', [PeriksaController::class, 'show'])->name('daftar-poli.detail');
     Route::get('/riwayat', [DaftarPoliController::class, 'history'])->name('daftar-poli.history');
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
