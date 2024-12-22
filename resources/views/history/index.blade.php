@@ -56,17 +56,36 @@
 @endsection
 @section('js')
 <script>
+    function formatRupiah(angka) {
+            var number_string = angka.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                var separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            return 'Rp ' + rupiah;
+        }
     dt = $("#data_table").DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": "{{ route('daftar-poli.data') }}",
         "columns": [
-            {
-            data: 'created_at',
-                    name: 'nama_poli',
-                        render: function(data, type, row) {
-                            return new Date(data).toLocaleString();
-                        }
+                    {
+                        data: 'created_at',
+    name: 'nama_poli',
+    render: function(data, type, row) {
+        const date = new Date(data);
+        return date.toLocaleString('id-ID', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
                     },
                     { data: 'jadwal_periksa.hari', name: 'hari' },
                     { data: 'pasien.nama', name: 'nama' },

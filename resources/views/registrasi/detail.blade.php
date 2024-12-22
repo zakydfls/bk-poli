@@ -30,33 +30,34 @@
                         <table id="datatable" class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <td>Antrian</td>
-                                    <td>:</td>
-                                    <td>{{ $data->no_antrian }}</td>
+                                    <td class="text-gray-600 fw-semibold fs-6">Antrian</td>
+                                    <td class="text-gray-600 fw-semibold">:</td>
+                                    <td class="text-gray-600 fs-6">{{ $data->no_antrian }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Keluhan</td>
-                                    <td>:</td>
-                                    <td>{{ $data->keluhan }}</td>
+                                    <td class="text-gray-600 fw-semibold fs-6">Keluhan</td>
+                                    <td class="text-gray-600 fw-semibold">:</td>
+                                    <td class="text-gray-600 fs-6">{{ $data->keluhan }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Catatan</td>
-                                    <td>:</td>
-                                    <td>{{ $data->periksa->catatan ?? '-' }}</td>
+                                    <td class="text-gray-600 fw-semibold fs-6">Catatan</td>
+                                    <td class="text-gray-600 fw-semibold">:</td>
+                                    <td class="text-gray-600 fs-6">{{ $data->periksa->catatan ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Biaya Pemeriksaan</td>
-                                    <td>:</td>
-                                    <td>Rp. {{ number_format($data->periksa->biaya_periksa ?? 0, 2) }}</td>
+                                    <td class="text-gray-600 fw-semibold fs-6">Biaya Pemeriksaan</td>
+                                    <td class="text-gray-600 fw-semibold">:</td>
+                                    <td class="text-gray-600 fs-6">Rp. {{ number_format($data->periksa->biaya_periksa ??
+                                        0, 2) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Obat</td>
-                                    <td>:</td>
-                                    <td>
+                                    <td class="text-gray-600 fw-semibold fs-6">Obat</td>
+                                    <td class="text-gray-600 fw-semibold">:</td>
+                                    <td class="text-gray-600 fs-6">
                                         @if ($data->periksa)
                                         @foreach ($data->periksa->detailPeriksas as $detail)
-                                        <p>{{ $detail->obat->nama_obat }} - Rp. {{ number_format($detail->obat->harga,
-                                            0) }}</p>
+                                        <p class="mb-1">{{ $detail->obat->nama_obat }} - Rp. {{
+                                            number_format($detail->obat->harga, 0) }}</p>
                                         @endforeach
                                         @else
                                         -

@@ -52,7 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/obat/update', [ObatController::class, 'update'])->name('obat.update');
         Route::post('/obat/delete', [ObatController::class, 'destroy'])->name('obat.delete');
         Route::get('/obat', [ObatController::class, 'index'])->name('obat');
-        Route::get('/obat/data', [ObatController::class, 'data'])->name('obat.data');
 
         Route::post('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
         Route::post('/dokter/update', [DokterController::class, 'update'])->name('dokter.update');
@@ -70,6 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/jadwal-periksa/delete', [JadwalPeriksaController::class, 'destroy'])->name('jadwal-periksa.delete');
         Route::get('/jadwal-periksa', [JadwalPeriksaController::class, 'index'])->name('jadwal-periksa');
         Route::get('/jadwal-periksa/data', [JadwalPeriksaController::class, 'data'])->name('jadwal-periksa.data');
+
+        Route::get('/pemeriksaan', [DaftarPoliController::class, 'history'])->name('pemeriksaan');
+        Route::get('/pemeriksaan/action/{id}', [PeriksaController::class, 'create'])->name('pemeriksaan.action');
+        Route::post('/pemeriksaan/action/store', [PeriksaController::class, 'store'])->name('pemeriksaan.store');
     });
 
     Route::middleware('role:pasien')->group(function () {
@@ -88,6 +91,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
     Route::post('/pasien/update', [PasienController::class, 'update'])->name('pasien.update');
     Route::post('/pasien/delete', [PasienController::class, 'destroy'])->name('pasien.delete');
+
+    Route::get('/obat/data', [ObatController::class, 'data'])->name('obat.data');
 
     // jadwal periksa
 

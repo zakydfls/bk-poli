@@ -74,6 +74,7 @@
                     url: '{{ route("daftar-poli.jadwal") }}',
                     method: 'GET',
                     data: {
+                        poli: poli,
                         hari: hari,
                         id_dokter: poli
                     },
