@@ -7,6 +7,7 @@ use App\Models\Dokter;
 use App\Models\Poli;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class DokterController extends Controller
@@ -114,9 +115,34 @@ class DokterController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Dokter  $dokter
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Dokter $dokter) {}
+    public function edit(Dokter $dokter)
+    {
+        $id_dokter = Auth::user()->id_dokter;
+        $dokter = Dokter::where('id', $id_dokter)->first();
+
+        $polis = Poli::all();
+
+        return view('dokter.profile', [
+            'dokter' => $dokter,
+            'polis' => $polis,
+            'judul' => 'Profil Dokter',
+            'sub_judul' => 'Edit Profil'
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $id = Auth::user()->id_dokter;
+            $data = $request->all();
+            Dokter::where('id', $id)->update($data);
+
+            return redirect()->route('dokter.profile')->with('success', 'Data berhasil diubah');
+        } catch (\Exception $e) {
+            return redirect()->route('dokter.profile')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
 
     /**
      * Update the specified resource in storage.

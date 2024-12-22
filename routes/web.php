@@ -32,6 +32,7 @@ use App\Models\JadwalPeriksa;
 */
 
 Route::get('/login', [LoginController::class, 'view'])->name('login');
+Route::get('/landing', [LoginController::class, 'landing'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.auth');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
@@ -73,6 +74,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/pemeriksaan', [DaftarPoliController::class, 'history'])->name('pemeriksaan');
         Route::get('/pemeriksaan/action/{id}', [PeriksaController::class, 'create'])->name('pemeriksaan.action');
         Route::post('/pemeriksaan/action/store', [PeriksaController::class, 'store'])->name('pemeriksaan.store');
+
+        Route::get('/dokter/profile', [DokterController::class, 'edit'])->name('dokter.profile');
+        Route::post('/dokter/profile/update', [DokterController::class, 'updateProfile'])->name('dokter.update-profile');
     });
 
     Route::middleware('role:pasien')->group(function () {

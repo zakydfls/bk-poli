@@ -80,6 +80,12 @@
                             <div class="menu-item px-5">
                                 <a href="{{route('logout')}}" class="menu-link px-5">Keluar</a>
                             </div>
+                            @if (Auth::user()->role == 'dokter')
+
+                            <div class="menu-item px-5">
+                                <a href="{{route('dokter.profile')}}" class="menu-link px-5">Profile</a>
+                            </div>
+                            @endif
                             <!--end::Menu item-->
                         </div>
                         <!--end::Menu-->

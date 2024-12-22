@@ -139,13 +139,13 @@
 
                         <div class="mb-10">
                             <label class="form-label">Jam Mulai</label>
-                            <input type="text" class="form-control" name="jam_mulai" id="jam_mulai_u"
+                            <input type="time" class="form-control" name="jam_mulai" id="jam_mulai_u"
                                 placeholder="HH:MM" required>
                         </div>
 
                         <div class="mb-10">
                             <label class="form-label">Jam Selesai</label>
-                            <input type="text" class="form-control" name="jam_selesai" id="jam_selesai_u"
+                            <input type="time" class="form-control" name="jam_selesai" id="jam_selesai_u"
                                 placeholder="HH:MM" required>
                         </div>
 

@@ -15,6 +15,11 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    public function landing()
+    {
+        return view('landing');
+    }
+
     public function authenticate(Request $request)
     {
         $request->validate([
