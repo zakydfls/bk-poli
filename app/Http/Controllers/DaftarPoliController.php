@@ -61,18 +61,13 @@ class DaftarPoliController extends Controller
     public function data(Request $request)
     {
         if ($request->ajax()) {
-            // Ambil ID pasien dari pengguna yang sedang login
             $id_pasien = Auth::user()->id_pasien;
 
-            // Query untuk mengambil data DaftarPoli dengan relasi yang diperlukan
             $daftarPolis = DaftarPoli::with('jadwalPeriksa.dokter.poli', 'periksa', 'pasien');
 
-            // Filter based on user role
             if (Auth::user()->role === 'dokter') {
-                // Get doctor ID from the authenticated user
                 $dokter_id = Auth::user()->id_dokter;
 
-                // For dokter, show only their examinations using proper relationship
                 $daftarPolis->whereHas('jadwalPeriksa', function ($query) use ($dokter_id) {
                     $query->where('id_dokter', $dokter_id);
                 });

@@ -7,6 +7,7 @@ use App\Models\DetailPeriksa;
 use App\Models\Periksa;
 use App\Models\Poli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PeriksaController extends Controller
 {
@@ -51,10 +52,8 @@ class PeriksaController extends Controller
         try {
             $allRequest = $request->all();
 
-            // Get proper ID from daftar_poli
             $id_daftar_poli = $request->input('id_daftar_poli');
 
-            // Validate if daftar_poli exists
             $daftarPoli = DaftarPoli::find($id_daftar_poli);
             if (!$daftarPoli) {
                 return redirect()->back()->with('error', 'Data pendaftaran tidak ditemukan');
@@ -85,7 +84,7 @@ class PeriksaController extends Controller
                 ]);
             }
 
-            return redirect()->route('backoffice.registrasi.detail', $id_daftar_poli)
+            return redirect()->route('pemeriksaan', $id_daftar_poli)
                 ->with('success', 'Data berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()->back()
@@ -102,6 +101,12 @@ class PeriksaController extends Controller
     public function show($id)
     {
         $data = DaftarPoli::with('jadwalPeriksa.dokter.poli', 'periksa.detailPeriksas.obat', 'pasien')->find($id);
+        if (Auth::user()->role === 'pasien' && Auth::user()->id_pasien !== $data->id_pasien) {
+            return redirect()->back()->with('error', 'Unauthorized access');
+        }
+        if (Auth::user()->role === 'dokter' && Auth::user()->id_dokter !== $data->jadwalPeriksa->id_dokter) {
+            return redirect()->back()->with('error', 'Unauthorized access');
+        }
         $ids_obat = $data && $data->periksa && $data->periksa->detailPeriksas ? $data->periksa->detailPeriksas->pluck('id_obat')->map(function ($id) {
             return (string) $id;
         })->toArray() : [];

@@ -83,13 +83,44 @@ class JadwalPeriksaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    // public function store(JadwalPeriksaRequest $request)
+    // {
+    //     $payload = $request->validated();
+    //     $id_dokter = Auth::user()->id_dokter;
+    //     if ($id_dokter) {
+    //         $payload['id_dokter'] = $id_dokter;
+    //     }
+    //     $jadwal = JadwalPeriksa::create($payload);
+
+    //     if ($payload['status'] == 1) {
+    //         JadwalPeriksa::where('id_dokter', $payload['id_dokter'])
+    //             ->where('id', '!=', $jadwal->id)
+    //             ->update([
+    //                 'status' => false,
+    //             ]);
+    //     }
+
+    //     return redirect()->back()->with('success', 'Jadwal Periksa berhasil ditambahkan');
+    // }
     public function store(JadwalPeriksaRequest $request)
     {
         $payload = $request->validated();
         $id_dokter = Auth::user()->id_dokter;
+
         if ($id_dokter) {
             $payload['id_dokter'] = $id_dokter;
+
+            // Check if jadwal already exists for this day
+            $existingJadwal = JadwalPeriksa::where('id_dokter', $id_dokter)
+                ->where('hari', $payload['hari'])
+                ->first();
+
+            if ($existingJadwal) {
+                return redirect()->back()
+                    ->with('error', 'Anda sudah memiliki jadwal untuk hari ' . $payload['hari']);
+            }
         }
+
         $jadwal = JadwalPeriksa::create($payload);
 
         if ($payload['status'] == 1) {
@@ -133,16 +164,29 @@ class JadwalPeriksaController extends Controller
     {
         // dd($request->all());
         $jadwalPeriksa = JadwalPeriksa::find($request->id);
+
         $payload = $request->validate([
             'hari' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
             'status' => 'required',
         ]);
+
         $id_dokter = Auth::user()->id_dokter;
 
         if ($id_dokter) {
             $payload['id_dokter'] = $id_dokter;
+
+            // Check if jadwal exists for this day, excluding current record
+            $existingJadwal = JadwalPeriksa::where('id_dokter', $id_dokter)
+                ->where('hari', $payload['hari'])
+                ->where('id', '!=', $request->id)
+                ->first();
+
+            if ($existingJadwal) {
+                return redirect()->back()
+                    ->with('error', 'Anda sudah memiliki jadwal untuk hari ' . $payload['hari']);
+            }
         }
 
         $jadwalPeriksa->update($payload);

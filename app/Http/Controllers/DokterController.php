@@ -135,7 +135,10 @@ class DokterController extends Controller
     {
         try {
             $id = Auth::user()->id_dokter;
-            $data = $request->all();
+            $data = $request->validate([
+                'nama' => 'required',
+                'no_hp' => 'required',
+            ]);
             Dokter::where('id', $id)->update($data);
 
             return redirect()->route('dokter.profile')->with('success', 'Data berhasil diubah');

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
-                    @if (session('success'))
+                    {{-- @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -17,7 +17,7 @@
                         {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    @endif
+                    @endif --}}
                     <div class="card-header d-flex gap-3 align-items-center">
                         <h4 class="card-title">Detail Informasi</h4>
                         <div>

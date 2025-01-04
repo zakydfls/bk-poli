@@ -4,7 +4,7 @@
 
 <head>
 	<base href="../../../" />
-	<title>Polipiknik - Login</title>
+	<title>Polipiknik - Register</title>
 	<meta charset="utf-8" />
 	<meta name="description" content="." />
 	<meta name="keywords" content="" />
